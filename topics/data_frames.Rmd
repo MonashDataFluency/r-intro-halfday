@@ -211,7 +211,7 @@ gap[gap$country == "Australia" & gap$lifeExp >= 75,]
 
 If you encounter R code that is too difficult to read, it can often be broken down into multiple steps, with intermediate results stored in variables.
 
-However we can't do this with calls to the `filter` or `count` functions, since they are magic. More precisely, they use something called ["non-standard evaluation"](http://adv-r.had.co.nz/Computing-on-the-language.html). For example, this doesn't work:
+However we can't do this with calls to the `filter` function, since it is magic. More precisely, it uses something called ["non-standard evaluation"](http://adv-r.had.co.nz/Computing-on-the-language.html). For example, this doesn't work:
 
 ```
 is_australia <- year == "Australia"
@@ -229,17 +229,70 @@ plot(gap_australia$year, gap_australia$lifeExp)
 However we will see a much more flexible way of plotting in the final section of this workshop.
 
 
-# Factors
-
-Just a little bit on this topic.
-
 
 # Sorting
 
+Data frames can be sorted in the `arrange` function in `dplyr`.
 
-# t test
+```{r}
+arrange(gap, country)
+```
 
-We now demonstrate a t test as an example of statistical tests available in R.
+The `desc` helper function can be used to arrange in descending order.
+
+```{r}
+arrange(gap, desc(country))
+```
+
+
+### Challenge {.challenge}
+
+Which country had the lowest life expectancy in 1992?
+
+
+
+
+# Summaries
+
+R has a variety of functions for summarizing a vector, including: `mean`, `min`, `max`, `median`, `sd`.
+
+```{r}
+mean( c(1,2,3,4) )
+```
+
+We can use this on the Gap minder data.
+
+```{r}
+gap2007 <- filter(gap, year == 2007)
+mean(gap2007$lifeExp)
+```
+
+(Possibly this should be a `weighted.mean`, as countries have different populations, but let's skip this detail.)
+
+The `summarize` function in `dplyr` allows these to be applied to data frames.
+
+```{r}
+summarize(gap, mean_lifeExp=mean(lifeExp))
+```
+
+So far unremarkable, but `summarize` comes into its own when the `group_by` "adjective" is used.
+
+```{r}
+summarize(group_by(gap, year), mean_lifeExp=mean(lifeExp))
+```
+
+### Challenge {.challenge}
+
+What is the average gdpPercap for each continent in 2007?
+
+Advanced: Use `weighted.mean` to calculate this correctly.
+
+
+
+
+# t-test
+
+We now demonstrate a t-test as an example of statistical tests available in R.
 
 Has life expectancy increased from 2002 to 2007?
 
@@ -258,7 +311,7 @@ all(gap2002$country == gap2007$country)
 t.test(gap2007$lifeExp, gap2002$lifeExp, paired=TRUE)
 ```
 
-The result of a t test is actually a value we can manipulate further.
+The result of a t-test is actually a value we can manipulate further.
 
 ```{r}
 result <- t.test(gap2007$lifeExp, gap2002$lifeExp, paired=TRUE)
@@ -270,20 +323,21 @@ names(result)
 result$p.value
 ```
 
-In R, a t test is just another function returning just another type of data, so it can also be a building block.
-
-
-# Summaries
+In R, a t-test is just another function returning just another type of data, so it can also be a building block.
 
 
 
+# Some topics not covered
 
+* Factors are a type of vector for categorical data. Factors are similar to character vectors but with an associated set of "levels". See the `factor` function. It may be necessary to convert character vectors into factors, for example to adjust the order of levels when they are displayed in a plot.
 
+* Matrices are similar to data frames, but the columns all contain the same type of data. Conceptually, in a data frame each observation is a row, but in a matrix each observation is a cell in the matrix. See the `matrix` and `as.matrix` functions. These are used in bioinformatics, for example RNA-Seq results summarized as a matrix of read counts associated with genes (rows) and samples (columns).
 
+* Joining data frames together. See functions such as `left_join` and `bind_rows`.
 
+These are covered in our [full day course](https://monashbioinformaticsplatform.github.io/r-intro/).
 
-
-
+We have also not really scratched the surface of what `dplyr` can do. For example, we haven't mentioned the pipe [`%>%`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html), which is key to writing elegant `dplyr` code. [The R for Data Science](http://r4ds.had.co.nz/transform.html) book provides a more complete introduction to `dplyr`.
 
 
 
