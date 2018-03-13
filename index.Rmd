@@ -6,6 +6,8 @@ output:
         css: style.css
 ---
 
+<img src="figures/R.jpg" width="25%" style="float: right; margin-left: 5em">
+
 These are the course notes for a half-day introduction to R, given by the [Monash Bioinformatics Platform](http://bioinformatics.erc.monash.edu) as part of Monash University's [Data Fluency](https://www.monash.edu/library/data-fluency) initiative.
 
 R is both a programming language and an interactive environment for doing data science. Today we will be concentrating on R as an *interactive environment*. This will be just a small taste of R, after today there will still be much to learn about R as a programming language and as an environment for data science.

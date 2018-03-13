@@ -289,11 +289,14 @@ This will all make more sense once you have seen these data types in action.
 
 ### Tip {.callout}
 
-If you're not sure what type of value you are dealing with you can use `class`, or for more detailed information `str` (structure). Try the following:
+If you're not sure what type of value you are dealing with you can use `class`. To see how R thinks of a value internally use `mode` (storage mode). We haven't yet seen cases where `class` and `mode` differ, but we will in the next section. For more detailed information `str` (structure). Try the following:
 
 ```{r eval=FALSE}
 class(myvec)
+mode(myvec)
+
 class(mylist)
+mode(mylist)
 str(mylist)
 ```
 
@@ -334,7 +337,7 @@ Examples: `TRUE` `FALSE` `T` `F` `c(TRUE,FALSE,TRUE)`
 
 #### factor vector
 
-A categorical vector, where the elements can be one of several different "levels". There will be more on these in the chapter on data frames.
+A categorical vector, where the elements can be one of several different "levels".
 
 Creation/casting: `factor(c("mutant","wildtype","mutant"), levels=c("wildtype","mutant"))`
 

@@ -34,7 +34,7 @@ This is data from [Gapminder](https://www.gapminder.org/) on life expectancy ove
 Note: "tibble" refers to the Tidyverse's improved form of data frame.
 
 
-# Exploring data
+# Exploring
 
 The `View` function gives us a spreadsheet-like view of the data frame.
 
@@ -247,7 +247,7 @@ arrange(gap, desc(country))
 
 ### Challenge {.challenge}
 
-Which country had the lowest life expectancy in 1992?
+Which country had the lowest life expectancy in 1952?
 
 
 
@@ -329,17 +329,19 @@ In R, a t-test is just another function returning just another type of data, so 
 
 # Some topics not covered
 
+* Missing data, which R represents as `NA`.
+
 * Factors are a type of vector for categorical data. Factors are similar to character vectors but with an associated set of "levels". See the `factor` function. It may be necessary to convert character vectors into factors, for example to adjust the order of levels when they are displayed in a plot.
 
 * Matrices are similar to data frames, but the columns all contain the same type of data. Conceptually, in a data frame each observation is a row, but in a matrix each observation is a cell in the matrix. See the `matrix` and `as.matrix` functions. These are used in bioinformatics, for example RNA-Seq results summarized as a matrix of read counts associated with genes (rows) and samples (columns).
 
 * Joining data frames together. See functions such as `left_join` and `bind_rows`.
 
-These are covered in our [full day course](https://monashbioinformaticsplatform.github.io/r-intro/).
+These are covered in our [full day introductory course](https://monashbioinformaticsplatform.github.io/r-intro/).
 
-We have also not really scratched the surface of what `dplyr` can do. For example, we haven't mentioned the pipe [`%>%`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html), which is key to writing elegant `dplyr` code. [The R for Data Science](http://r4ds.had.co.nz/transform.html) book provides a more complete introduction to `dplyr`.
+We also haven't covered programming topics such as writing functions and for-loops. These are covered in our ["more R"](https://monashbioinformaticsplatform.github.io/r-more/) course.
 
-
+Finally, we have not yet told the full `dplyr` story. For example, we haven't mentioned the pipe [`%>%`](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html), which is key to writing elegant `dplyr` code. [The R for Data Science](http://r4ds.had.co.nz/transform.html) book provides a more complete introduction to `dplyr`.
 
 
 

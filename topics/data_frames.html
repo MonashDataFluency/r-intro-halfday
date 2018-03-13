@@ -125,7 +125,7 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#loading-data">Loading data</a></li>
-<li><a href="#exploring-data">Exploring data</a></li>
+<li><a href="#exploring">Exploring</a></li>
 <li><a href="#indexing">Indexing</a></li>
 <li><a href="#basic-plotting">Basic plotting</a></li>
 <li><a href="#sorting">Sorting</a></li>
@@ -172,8 +172,8 @@ $(document).ready(function () {
 <p>This is data from <a href="https://www.gapminder.org/">Gapminder</a> on life expectancy over time in different countries.</p>
 <p>Note: “tibble” refers to the Tidyverse’s improved form of data frame.</p>
 </div>
-<div id="exploring-data" class="section level1">
-<h1>Exploring data</h1>
+<div id="exploring" class="section level1">
+<h1>Exploring</h1>
 <p>The <code>View</code> function gives us a spreadsheet-like view of the data frame.</p>
 <pre><code>View(gap)</code></pre>
 <p>However understanding this data frame in R should be less a matter of using a graphical interface, and more about using a variety of R functions to interrogate it.</p>
@@ -464,7 +464,7 @@ filter(gap, is_australia)</code></pre>
 ## # ... with 1,694 more rows</code></pre>
 <div id="challenge-1" class="section level3 challenge">
 <h3>Challenge</h3>
-<p>Which country had the lowest life expectancy in 1992?</p>
+<p>Which country had the lowest life expectancy in 1952?</p>
 </div>
 </div>
 <div id="summaries" class="section level1">
@@ -557,12 +557,14 @@ class(result)</code></pre>
 <div id="some-topics-not-covered" class="section level1">
 <h1>Some topics not covered</h1>
 <ul>
+<li><p>Missing data, which R represents as <code>NA</code>.</p></li>
 <li><p>Factors are a type of vector for categorical data. Factors are similar to character vectors but with an associated set of “levels”. See the <code>factor</code> function. It may be necessary to convert character vectors into factors, for example to adjust the order of levels when they are displayed in a plot.</p></li>
 <li><p>Matrices are similar to data frames, but the columns all contain the same type of data. Conceptually, in a data frame each observation is a row, but in a matrix each observation is a cell in the matrix. See the <code>matrix</code> and <code>as.matrix</code> functions. These are used in bioinformatics, for example RNA-Seq results summarized as a matrix of read counts associated with genes (rows) and samples (columns).</p></li>
 <li><p>Joining data frames together. See functions such as <code>left_join</code> and <code>bind_rows</code>.</p></li>
 </ul>
-<p>These are covered in our <a href="https://monashbioinformaticsplatform.github.io/r-intro/">full day course</a>.</p>
-<p>We have also not really scratched the surface of what <code>dplyr</code> can do. For example, we haven’t mentioned the pipe <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html"><code>%&gt;%</code></a>, which is key to writing elegant <code>dplyr</code> code. <a href="http://r4ds.had.co.nz/transform.html">The R for Data Science</a> book provides a more complete introduction to <code>dplyr</code>.</p>
+<p>These are covered in our <a href="https://monashbioinformaticsplatform.github.io/r-intro/">full day introductory course</a>.</p>
+<p>We also haven’t covered programming topics such as writing functions and for-loops. These are covered in our <a href="https://monashbioinformaticsplatform.github.io/r-more/">“more R”</a> course.</p>
+<p>Finally, we have not yet told the full <code>dplyr</code> story. For example, we haven’t mentioned the pipe <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html"><code>%&gt;%</code></a>, which is key to writing elegant <code>dplyr</code> code. <a href="http://r4ds.had.co.nz/transform.html">The R for Data Science</a> book provides a more complete introduction to <code>dplyr</code>.</p>
 </div>
 
 

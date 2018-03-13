@@ -125,10 +125,7 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#variables">Variables</a></li>
-<li><a href="#vectors">Vectors</a><ul>
-<li><a href="#types-of-vector">Types of vector</a></li>
-<li><a href="#indexing-vectors">Indexing vectors</a></li>
-</ul></li>
+<li><a href="#vectors">Vectors</a></li>
 <li><a href="#functions">Functions</a></li>
 <li><a href="#lists">Lists</a></li>
 <li><a href="#appendix-overview-of-data-types">Appendix: Overview of data types</a></li>
@@ -344,9 +341,12 @@ mylist$greeting</code></pre>
 <p>This will all make more sense once you have seen these data types in action.</p>
 <div id="tip-1" class="section level3 callout">
 <h3>Tip</h3>
-<p>If you’re not sure what type of value you are dealing with you can use <code>class</code>, or for more detailed information <code>str</code> (structure). Try the following:</p>
+<p>If you’re not sure what type of value you are dealing with you can use <code>class</code>. To see how R thinks of a value internally use <code>mode</code> (storage mode). We haven’t yet seen cases where <code>class</code> and <code>mode</code> differ, but we will in the next section. For more detailed information <code>str</code> (structure). Try the following:</p>
 <pre class="r"><code>class(myvec)
+mode(myvec)
+
 class(mylist)
+mode(mylist)
 str(mylist)</code></pre>
 </div>
 <div id="vector" class="section level3">
@@ -375,7 +375,7 @@ str(mylist)</code></pre>
 </div>
 <div id="factor-vector" class="section level4">
 <h4>factor vector</h4>
-<p>A categorical vector, where the elements can be one of several different “levels”. There will be more on these in the chapter on data frames.</p>
+<p>A categorical vector, where the elements can be one of several different “levels”.</p>
 <p>Creation/casting: <code>factor(c(&quot;mutant&quot;,&quot;wildtype&quot;,&quot;mutant&quot;), levels=c(&quot;wildtype&quot;,&quot;mutant&quot;))</code></p>
 </div>
 </div>
