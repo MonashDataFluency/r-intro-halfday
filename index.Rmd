@@ -1,0 +1,59 @@
+---
+title: "A half-day introduction to R"
+output: 
+    html_document:
+        theme: cerulean
+        css: style.css
+---
+
+These are the course notes for a half-day introduction to R, given by the [Monash Bioinformatics Platform](http://bioinformatics.erc.monash.edu) as part of Monash University's [Data Fluency](https://www.monash.edu/library/data-fluency) initiative.
+
+R is both a programming language and an interactive environment for doing data science. Today we will be concentrating on R as an *interactive environment*. This will be just a small taste of R, after today there will still be much to learn about R as a programming language and as an environment for data science.
+
+We will be using RStudio, a friendly front end to R. On the day, we will be using RStudio from the web, but you can also install R and RStudio on your laptop. Both R and RStudio are free.
+
+* [Download R](https://cran.rstudio.com/)
+* [Download RStudio](https://www.rstudio.com/products/rstudio/download/)
+
+
+
+## File used in this workshop
+
+* [gapminder.csv](gapminder.csv)
+
+## Topics
+
+* [Starting out in R](topics/start.html)
+* [Data frames](topics/data_frames.html)
+* [Plotting with ggplot2](topics/ggplot.html)
+
+
+## Further resources
+
+Workshops run by the Monash Bioinformatics Platform:
+
+* [A full-day introduction to R](https://monashbioinformaticsplatform.github.io/r-more/), also covering topics such as matrices, missing data, factors, and merging data frames.
+* [A further workshop on R](https://monashbioinformaticsplatform.github.io/r-more/), covering programming, the modern Tidyverse approach, Bioconductor for biological data, Rmarkdown for writing up results, and Shiny for web-apps.
+
+Other resources:
+
+* [The R for Data Science book](http://r4ds.had.co.nz/) is a great introduction to modern R usage.
+
+* [Software Carpentry](https://software-carpentry.org/) and [Data Carpentry](http://www.datacarpentry.org/) offer workshops on using computers effectively for science, with all course notes free online. For example, [this Data Carpentry workshop on R](http://www.datacarpentry.org/R-ecology-lesson/).
+
+
+## Authors
+
+This course is developed by the [Monash Bioinformatics Platform](http://bioinformatics.erc.monash.edu/), with material by Paul Harrison and Nick Wong. 
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="figures/CC-BY.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+
+Some of this material is derived from work that is [Copyright (c) Software Carpentry](http://software-carpentry.org/).
+
+## Source code
+
+* [GitHub repository](https://github.com/MonashDataFluency/r-intro-halfday)
+
+<p style="margin-top: 5em; text-align: right">
+<a href="http://bioinformatics.erc.monash.edu"><img src="figures/MBP-banner.png" width="675"></a>
+</p>

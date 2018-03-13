@@ -1,0 +1,292 @@
+---
+title: Data frames
+---
+
+This section uses a collection of modern packages collectively known as the [Tidyverse](https://www.tidyverse.org/). If this is not installed already, you will need to install it. However in the workshop today it is already installed.
+
+```{r, eval=FALSE}
+# install.packages("tidyverse")
+```
+
+We need to load this package in order to use it.
+
+```{r, warning=F, message=F}
+library(tidyverse)
+```
+
+The `tidyverse` package loads various other packages, setting up a modern R environment. In this section we will be using functions from the `readr` and `dplyr` packages.
+
+R's and its predecessor S have a history dating back to 1976. The Tidyverse fixes some dubious design decisions baked into "base R", including having its own slightly improved form of data frame. Sticking to the Tidyverse where possible is generally safer, Tidyverse packages are much more willing to generate errors rather than ignore problems. However that one package you absolutely need to use might mean encountering base R quirks occasionally.
+
+
+# Loading data
+
+We will use the `read_csv` function from `readr`. (See also `read.csv` in base R.)
+
+```{r}
+gap <- read_csv("gapminder.csv")
+
+gap
+```
+
+This is data from [Gapminder](https://www.gapminder.org/) on life expectancy over time in different countries.
+
+Note: "tibble" refers to the Tidyverse's improved form of data frame.
+
+
+# Exploring data
+
+The `View` function gives us a spreadsheet-like view of the data frame.
+
+```
+View(gap)
+```
+
+However understanding this data frame in R should be less a matter of using a graphical interface, and more about using a variety of R functions to interrogate it.
+
+```{r}
+nrow(gap)
+ncol(gap)
+colnames(gap)
+class(gap)
+mode(gap)
+summary(gap)
+```
+
+
+### Tip {.callout}
+
+A data frame can also be created from vectors, with the `data_frame` function. (See also `data.frame` in base R.) For example:
+
+```{r}
+data_frame(foo=c(10,20,30), bar=c("a","b","c"))
+```
+
+### Tip {.callout}
+
+A data frame has column names (`colnames`), and base R data frames can also have row names (`rownames`). However the modern convention, which the Tidyverse enforces, is for a data frame to use column names but not row names. Typically a data frame contains a collection of items (rows), each having various properties (columns). If an item has an identifier such as a unique name, this would be given as just another column.
+
+
+###
+
+The `count` function from `dplyr` can help us understand the structure of this data frame. `count` is a little *magical*, we can refer to columns of the data frame directly in the arguments to `count`. (See also `table` in base R.)
+
+```{r}
+count(gap, year)
+count(gap, country)
+count(count(gap, country), n)
+```
+
+There is data from 142 countries at 12 time points. The data is complete, with no missing values.
+
+
+# Indexing
+
+The data frames can be subset using `[row,column]` syntax.
+
+```{r}
+gap[3,4]
+```
+
+Note that this is still wrapped in a data frame. (This is a behaviour specific to Tidyverse data frames.)
+
+Columns can be given by name.
+
+```{r}
+gap[3, "lifeExp"]
+```
+
+The row or column may be omitted, thereby retrieving the full row or column.
+
+```{r}
+gap[3,]
+```
+
+Multiple rows or columns may be retrieved using a vector.
+
+```{r}
+rows_wanted <- c(1,3,5)
+gap[rows_wanted,]
+```
+
+Ok, so how do we actually get data out of a data frame?
+
+Under the hood, a data frame is a list of column vectors. This is why `mode` told us `gap` was a list. This means we can use `$` to retrieve columns. (Occasionally it is also useful to use `[[ ]]` to retrieve columns, for example if the column name we want is stored in a variable.)
+
+```{r}
+head( gap$lifeExp )
+head( gap[["lifeExp"]] )
+```
+
+So to get just the lifeExp value of the third row as above, but unwrapped, we can use:
+
+```{r}
+gap$lifeExp[3]
+```
+
+
+This may all seem confusing at first, but with practice it will  become natural.
+
+
+## Logical indexing
+
+A method of indexing that we haven't discussed yet is logical indexing. Instead of specifying the row number or numbers that we want, we can give a logical vector which is `TRUE` for the rows we want and `FALSE` otherwise. This can also be used with vectors.
+
+Suppose we want just the data for Australia. `==` is a comparison operator meaning "equal to".
+
+```{r}
+is_australia <- gap$country == "Australia"
+
+head(is_australia)
+sum(is_australia)
+```
+
+We can now grab just those rows of the data frame relating to Australia:
+
+```{r}
+gap_australia <- gap[is_australia,]
+
+gap_australia
+```
+
+We might also want to know *which* rows our logical vector is `TRUE` for. This is achieved with the `which` function. The result of this can also be used to index the data frame, as we saw earlier.
+
+```{r}
+which_australia <- which(is_australia)
+which_australia
+gap[which_australia,]
+```
+
+
+Comparison operators available are:
+
+* `x == y ` -- "equal to"
+* `x != y ` -- "not equal to"
+* `x < y  ` -- "less than"
+* `x > y  ` -- "greater than"
+* `x <= y ` -- "less than or equal to"
+* `x >= y ` -- "greater than or equal to"
+
+More complicated conditions can be constructed using logical operators:
+
+* `a & b ` -- "and", true only if both `a` and `b` are true.
+* `a | b ` -- "or", true if either `a` or `b` or both are true.
+* `! a   ` -- "not" , true if `a` is false, and false if `a` is true.
+
+
+For example, suppose we wanted to know in which year the life expectancy in Australia was over 75.
+
+```{r}
+over_75 <- gap$lifeExp >= 75
+is_australia_over_75 <- is_australia & over_75
+
+sum(is_australia_over_75)
+gap[is_australia_over_75,]
+```
+
+### Challenge {.challenge}
+
+Which countries had a life expectancy over 75 in 1977?
+
+
+## A `dplyr` shorthand
+
+The above method is a little laborious. We have to keep mentioning the name of the data frame, and there is a lot of punctuation to keep track of. `dplyr` provides a slightly magical function called `filter` which lets us write more concisely.
+
+```{r}
+filter(gap, country == "Australia")
+```
+
+In the second argument, we are able to refer to columns of the data frame as though they were variables.
+
+
+
+## Different ways to do the same thing
+
+We constructed `gap[is_australia_over_75,]` by creating several variables and then combining them. It is also perfectly possible to do all this in one line:
+
+```{r}
+gap[gap$country == "Australia" & gap$lifeExp >= 75,]
+```
+
+If you encounter R code that is too difficult to read, it can often be broken down into multiple steps, with intermediate results stored in variables.
+
+However we can't do this with calls to the `filter` or `count` functions, since they are magic. More precisely, they use something called ["non-standard evaluation"](http://adv-r.had.co.nz/Computing-on-the-language.html). For example, this doesn't work:
+
+```
+is_australia <- year == "Australia"
+filter(gap, is_australia)
+```
+
+
+
+# Basic plotting
+
+```{r}
+plot(gap_australia$year, gap_australia$lifeExp)
+```
+
+However we will see a much more flexible way of plotting in the final section of this workshop.
+
+
+# Factors
+
+Just a little bit on this topic.
+
+
+# Sorting
+
+
+# t test
+
+We now demonstrate a t test as an example of statistical tests available in R.
+
+Has life expectancy increased from 2002 to 2007?
+
+```{r}
+gap2002 <- filter(gap, year == 2002)
+gap2007 <- filter(gap, year == 2007)
+
+t.test(gap2007$lifeExp, gap2002$lifeExp)
+```
+
+This can actually be considered a paired sample t-test. We can specify `paired=TRUE` to `t.test` to perform a paired sample t-test (we can check this by looking at `?t.test`). We will first check that both data frames are in the correct order.
+
+```{r}
+all(gap2002$country == gap2007$country)
+
+t.test(gap2007$lifeExp, gap2002$lifeExp, paired=TRUE)
+```
+
+The result of a t test is actually a value we can manipulate further.
+
+```{r}
+result <- t.test(gap2007$lifeExp, gap2002$lifeExp, paired=TRUE)
+
+class(result)
+mode(result)
+names(result)
+
+result$p.value
+```
+
+In R, a t test is just another function returning just another type of data, so it can also be a building block.
+
+
+# Summaries
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

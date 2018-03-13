@@ -1,0 +1,198 @@
+---
+title: Plotting with ggplot2
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(fig.width=6, fig.height=4)
+```
+
+
+We already saw some of R's built in plotting facilities with the function `plot`. A more recent and much more powerful plotting library is `ggplot2`. This implements ideas from a book called "The Grammar of Graphics". The syntax is a little strange, but there are plenty of examples in the [online documentation](http://ggplot2.tidyverse.org/reference/).
+
+If `ggplot2` isn't already installed, we would need to install it.
+
+```{r, eval=FALSE}
+# install.packages("ggplot2")
+# or
+# install.packages("tidyverse")
+```
+
+`ggplot2` is part of the Tidyverse, so loadinging the `tidyverse` package will load `ggplot2`.
+
+```{r, warning=F}
+library(tidyverse)
+```
+
+Producing a plot with ggplot2, we must give three things:
+
+1. A data frame containing our data.
+2. How the columns of the data frame can be translated into positions, colors, sizes, and shapes of graphical elements ("aesthetics").
+3. The actual graphical elements to display ("geometric objects").
+
+
+# Plotting with ggplot2
+
+We continue using the Gapminder data, which was loaded with:
+
+```{r}
+gap <- read_csv("gapminder.csv")
+```
+
+Let's make our first ggplot.
+
+```{r}
+ggplot(gap, aes(x=year, y=lifeExp)) +
+    geom_point()
+```
+
+The call to `ggplot` and `aes` sets up the basics of how we are going to represent the various columns of the data frame. `aes` defines the "aesthetics", which is how columns of the data frame map to graphical attributes such as x and y position, color, size, etc. We then literally add layers of graphics to this.
+
+`aes` is another example of magic "non-standard evaluation", arguments to `aes` may refer to columns of the data frame directly.
+
+Further aesthetics can be used. Any aesthetic can be either numeric or categorical, an appropriate scale will be used.
+
+```{r}
+ggplot(gap, aes(x=year, y=lifeExp, color=continent, size=pop)) +
+    geom_point()
+```
+
+### Challenge {.challenge}
+
+This R code will get the data from the year 2007:
+
+```{r}
+gap2007 <- filter(gap, year == 2007)
+```
+
+Create a ggplot of this with `gdpPercap` on the x-axis and `lifeExp` on the y-axis.
+
+
+# Further geoms
+
+To draw lines, we need to use a "group" aesthetic.
+
+```{r}
+ggplot(gap, aes(x=year, y=lifeExp, group=country, color=continent)) +
+    geom_line()
+```
+
+A wide variety of geoms are available. Here we show Tukey box-plots. Note again the use of the "group" aesthetic, without this ggplot will just show one big box-plot.
+
+```{r}
+ggplot(gap, aes(x=year, y=lifeExp, group=year)) +
+    geom_boxplot()
+```
+
+`geom_smooth` can be used to show trends.
+
+```{r}
+ggplot(gap, aes(x=year, y=lifeExp)) +
+    geom_point() +
+    geom_smooth()
+```
+
+Aesthetics can be specified globally in `ggplot`, or as the first argument to individual geoms. Here, the "group" is applied only to draw the lines, and "color" is used to produce multiple trend lines:
+
+```{r}
+ggplot(gap, aes(x=year, y=lifeExp)) +
+    geom_line(aes(group=country)) +
+    geom_smooth(aes(color=continent))
+```
+
+
+# Highlighting subsets
+
+Geoms can be added that use a different data frame, using the `data=` argument.
+
+```{r}
+gap_australia <- filter(gap, country == "Australia")
+
+ggplot(gap, aes(x=year, y=lifeExp, group=country)) +
+    geom_line() +
+    geom_line(data=gap_australia, color="red", size=2)
+```
+
+Notice also that the second `geom_line` has some further arguments controlling its appearance. These are **not** aesthetics, they are not a mapping of data to appearance, rather they are direct specification of the appearance. There isn't an associated scale as when color was an aesthetic.
+
+
+# Fine-tuning a plot
+
+Adding `labs` to a ggplot adjusts the labels given to the axes and legends. A plot title can also be specified.
+
+```{r}
+ggplot(gap, aes(x=year, y=lifeExp)) +
+    geom_point() +
+    labs(x="Year", y="Life expectancy", title="Gapminder")
+```
+
+Type `scale_` and press the tab key. You will see functions giving fine-grained controls over various scales (x, y, color, etc). Limits on the scale can be set, as well as transformations (eg log10), and breaks (labelled values).
+
+Suppose we want our y-axis to start at zero.
+
+```{r}
+ggplot(gap, aes(x=year, y=lifeExp)) +
+    geom_point() +
+    scale_y_continuous(limits=c(0,100))
+```
+
+The `lims` function can also be used to set limits.
+
+Very fine grained control is possible over the appearance of ggplots, see the ggplot2 documentation for details and further examples.
+
+
+### Challenge {.challenge}
+
+Continuing with your scatter-plot of the 2007 data, add axis labels to your plot.
+
+Advanced: Give your x axis a log scale (see the documentation on `scale_x_continuous`, specifically the `trans` argument).
+
+
+# Faceting
+
+Faceting lets us quickly produce a collection of small plots. The plots all have the same scales and the eye can easily compare them.
+
+```{r}
+ggplot(gap, aes(x=year, y=lifeExp, group=country)) +
+    geom_line() +
+    facet_wrap(~ continent)
+```
+
+Note the use of `~`, which we've not seen before. `~` syntax is used in R to specify dependence on some set of variables, for example when specifying a linear model. Here the information in each plot is dependent on the continent.
+
+
+### Challenge {.challenge}
+
+Let's return again to your scatter-plot of the 2007 data.
+
+Adjust your plot to now show data from all years, with each year shown in a separate facet, using `facet_wrap(~ year)`.
+
+Advanced: Highlight Australia in your plot.
+
+
+# Saving ggplots
+
+The act of plotting a ggplot is actually triggered when it is printed. In an interactive session we are automatically printing each value we calculate, but if you are using a for loop, or other R programming constructs, you might need to explcitly `print( )` the plot.
+
+Ggplots can be saved using `ggsave`.
+
+```{r, eval=FALSE}
+# Plot created but not shown.
+p <- ggplot(gap, aes(x=year, y=lifeExp)) + geom_point()
+
+# Only when we try to look at the value p is it shown
+p
+
+# Alternatively, we can explicitly print it
+print(p)
+
+# To save to a file
+ggsave("test.png", p)
+```
+
+
+
+
+
+
+
+
