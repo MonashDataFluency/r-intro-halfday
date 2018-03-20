@@ -133,7 +133,7 @@ $(document).ready(function () {
 </ul>
 </div>
 
-<p>We already saw some of R’s built in plotting facilities with the function <code>plot</code>. A more recent and much more powerful plotting library is <code>ggplot2</code>. This implements ideas from a book called “The Grammar of Graphics”. The syntax is a little strange, but there are plenty of examples in the <a href="http://ggplot2.tidyverse.org/reference/">online documentation</a>.</p>
+<p>We already saw some of R’s built in plotting facilities with the function <code>plot</code>. A more recent and much more powerful plotting library is <code>ggplot2</code>. <code>ggplot2</code> is another mini-language within R, a language for creating plots. It implements ideas from a book called [“The Grammar of Graphics” [url <a href="https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448" class="uri">https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448</a>]]. The syntax can be a little strange, but there are plenty of examples in the <a href="http://ggplot2.tidyverse.org/reference/">online documentation</a>.</p>
 <p>If <code>ggplot2</code> isn’t already installed, we would need to install it.</p>
 <pre class="r"><code># install.packages(&quot;ggplot2&quot;)
 # or
@@ -148,7 +148,7 @@ $(document).ready(function () {
 <pre><code>## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<p>Producing a plot with ggplot2, we must give three things:</p>
+<p>Producing a plot with <code>ggplot2</code>, we must give three things:</p>
 <ol style="list-style-type: decimal">
 <li>A data frame containing our data.</li>
 <li>How the columns of the data frame can be translated into positions, colors, sizes, and shapes of graphical elements (“aesthetics”).</li>

@@ -7,7 +7,7 @@ knitr::opts_chunk$set(fig.width=6, fig.height=4)
 ```
 
 
-We already saw some of R's built in plotting facilities with the function `plot`. A more recent and much more powerful plotting library is `ggplot2`. This implements ideas from a book called "The Grammar of Graphics". The syntax is a little strange, but there are plenty of examples in the [online documentation](http://ggplot2.tidyverse.org/reference/).
+We already saw some of R's built in plotting facilities with the function `plot`. A more recent and much more powerful plotting library is `ggplot2`. `ggplot2` is another mini-language within R, a language for creating plots. It implements ideas from a book called ["The Grammar of Graphics" [url https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448]]. The syntax can be a little strange, but there are plenty of examples in the [online documentation](http://ggplot2.tidyverse.org/reference/).
 
 If `ggplot2` isn't already installed, we would need to install it.
 
@@ -23,7 +23,7 @@ If `ggplot2` isn't already installed, we would need to install it.
 library(tidyverse)
 ```
 
-Producing a plot with ggplot2, we must give three things:
+Producing a plot with `ggplot2`, we must give three things:
 
 1. A data frame containing our data.
 2. How the columns of the data frame can be translated into positions, colors, sizes, and shapes of graphical elements ("aesthetics").

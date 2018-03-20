@@ -26,7 +26,7 @@ We will be using RStudio, a friendly front end to R. On the day, we will be usin
 ## Topics
 
 * [Starting out in R](topics/start.html)
-* [Data frames](topics/data_frames.html)
+* [Data frames and dplyr](topics/data_frames.html)
 * [Plotting with ggplot2](topics/ggplot.html)
 
 

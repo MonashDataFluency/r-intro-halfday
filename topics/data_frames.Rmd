@@ -1,8 +1,12 @@
 ---
-title: Data frames
+title: Data frames and dplyr
 ---
 
-This section uses a collection of modern packages collectively known as the [Tidyverse](https://www.tidyverse.org/). If this is not installed already, you will need to install it. However in the workshop today it is already installed.
+"Data frame" is R's name for tabular data. We generally want each row in a data frame to represents a unit of observation, and each column to contain a different type of information about the units of observation. Tabular data in this form is called ["tidy data"](http://vita.had.co.nz/papers/tidy-data.html).
+
+This section uses a collection of modern packages collectively known as the [Tidyverse](https://www.tidyverse.org/). R and its predecessor S have a history dating back to 1976. The Tidyverse fixes some dubious design decisions baked into "base R", including having its own slightly improved form of data frame. Sticking to the Tidyverse where possible is generally safer, Tidyverse packages are more willing to generate errors rather than ignore problems.
+
+If the Tidyverse is not already installed, you will need to install it. However on the server we are using today it is already installed.
 
 ```{r, eval=FALSE}
 # install.packages("tidyverse")
@@ -16,7 +20,8 @@ library(tidyverse)
 
 The `tidyverse` package loads various other packages, setting up a modern R environment. In this section we will be using functions from the `readr` and `dplyr` packages.
 
-R's and its predecessor S have a history dating back to 1976. The Tidyverse fixes some dubious design decisions baked into "base R", including having its own slightly improved form of data frame. Sticking to the Tidyverse where possible is generally safer, Tidyverse packages are much more willing to generate errors rather than ignore problems. However that one package you absolutely need to use might mean encountering base R quirks occasionally.
+
+R is a language with mini-languages within it that solve specific problem domains. `dplyr` is such a mini-language, a set of "verbs" (functions) that work well together. `dplyr`, with the help of `tidyr` for some more complex operations, provides a way to perform most manipulations on a data frame that you might need.
 
 
 # Loading data
@@ -29,7 +34,7 @@ gap <- read_csv("gapminder.csv")
 gap
 ```
 
-This is data from [Gapminder](https://www.gapminder.org/) on life expectancy over time in different countries.
+This is data from [Gapminder](https://www.gapminder.org/) on life expectancy over time in different countries. The "unit of observation" is a country in a particular year.
 
 Note: "tibble" refers to the Tidyverse's improved form of data frame.
 
@@ -69,7 +74,7 @@ A data frame has column names (`colnames`), and base R data frames can also have
 
 ###
 
-The `count` function from `dplyr` can help us understand the structure of this data frame. `count` is a little *magical*, we can refer to columns of the data frame directly in the arguments to `count`. (See also `table` in base R.)
+The `count` function from `dplyr` can help us understand the structure of this data frame. (See also `table` in base R.) `count` is a little *magical*, we can refer to columns of the data frame directly in the arguments to `count`. 
 
 ```{r}
 count(gap, year)
@@ -82,7 +87,7 @@ There is data from 142 countries at 12 time points. The data is complete, with n
 
 # Indexing
 
-The data frames can be subset using `[row,column]` syntax.
+Data frames can be subset using `[row,column]` syntax.
 
 ```{r}
 gap[3,4]
@@ -111,21 +116,25 @@ gap[rows_wanted,]
 
 Ok, so how do we actually get data out of a data frame?
 
-Under the hood, a data frame is a list of column vectors. This is why `mode` told us `gap` was a list. This means we can use `$` to retrieve columns. (Occasionally it is also useful to use `[[ ]]` to retrieve columns, for example if the column name we want is stored in a variable.)
+Under the hood, a data frame is a list of column vectors. This is why `mode` told us that the underlying storage mode of `gap` was list. We can use `$` to retrieve columns, as in a list. (Occasionally it is also useful to use `[[ ]]` to retrieve columns, for example if the column name we want is stored in a variable.)
 
 ```{r}
 head( gap$lifeExp )
 head( gap[["lifeExp"]] )
 ```
 
-So to get just the lifeExp value of the third row as above, but unwrapped, we can use:
+To get the lifeExp value of the third row as above, but unwrapped, we can use:
 
 ```{r}
 gap$lifeExp[3]
 ```
 
 
-This may all seem confusing at first, but with practice it will  become natural.
+All of these indexing and access methods can also be used with `<-` to modify values or add new columns. For example, suppose we wanted a gdp column. We can add this to the data frame with:
+
+```{r}
+gap$gdp <- gap$gdpPercap * gap$pop
+```
 
 
 ## Logical indexing
@@ -174,7 +183,7 @@ More complicated conditions can be constructed using logical operators:
 * `! a   ` -- "not" , true if `a` is false, and false if `a` is true.
 
 
-For example, suppose we wanted to know in which year the life expectancy in Australia was over 75.
+For example, suppose we wanted to know in which years the life expectancy in Australia was over 75.
 
 ```{r}
 over_75 <- gap$lifeExp >= 75
@@ -186,7 +195,9 @@ gap[is_australia_over_75,]
 
 ### Challenge {.challenge}
 
-Which countries had a life expectancy over 75 in 1977?
+What continents are the countries divided into in this data?
+
+Which countries in Asia had a life expectancy over 75 in 2007?
 
 
 ## A `dplyr` shorthand
@@ -222,6 +233,8 @@ filter(gap, is_australia)
 
 # Basic plotting
 
+Simple plots can be created using the `plot` function.
+
 ```{r}
 plot(gap_australia$year, gap_australia$lifeExp)
 ```
@@ -232,7 +245,7 @@ However we will see a much more flexible way of plotting in the final section of
 
 # Sorting
 
-Data frames can be sorted in the `arrange` function in `dplyr`.
+Data frames can be sorted using the `arrange` function in `dplyr`.
 
 ```{r}
 arrange(gap, country)
@@ -247,20 +260,20 @@ arrange(gap, desc(country))
 
 ### Challenge {.challenge}
 
-Which country had the lowest life expectancy in 1952?
+Which country had the lowest life expectancy in 1952? Which had the highest?
 
 
 
 
 # Summaries
 
-R has a variety of functions for summarizing a vector, including: `mean`, `min`, `max`, `median`, `sd`.
+R has a variety of functions for summarizing a vector, including: `sum`, `mean`, `min`, `max`, `median`, `sd`.
 
 ```{r}
 mean( c(1,2,3,4) )
 ```
 
-We can use this on the Gap minder data.
+We can use this on the Gapminder data.
 
 ```{r}
 gap2007 <- filter(gap, year == 2007)
@@ -272,10 +285,10 @@ mean(gap2007$lifeExp)
 The `summarize` function in `dplyr` allows these to be applied to data frames.
 
 ```{r}
-summarize(gap, mean_lifeExp=mean(lifeExp))
+summarize(gap2007, mean_lifeExp=mean(lifeExp))
 ```
 
-So far unremarkable, but `summarize` comes into its own when the `group_by` "adjective" is used.
+So far unremarkable, but `summarize` comes into its own when the `group_by` "adjective" is used. (See also `apply`, `tapply` in base R.)
 
 ```{r}
 summarize(group_by(gap, year), mean_lifeExp=mean(lifeExp))
@@ -283,16 +296,16 @@ summarize(group_by(gap, year), mean_lifeExp=mean(lifeExp))
 
 ### Challenge {.challenge}
 
-What is the average gdpPercap for each continent in 2007?
+What is the average of gdpPercap for each continent in 2007?
 
-Advanced: Use `weighted.mean` to calculate this correctly.
+Advanced: What is the total GDP and total population for each continent in 2007? Therefore, what is the correct GDP per capita for each continent?
 
 
 
 
 # t-test
 
-We now demonstrate a t-test as an example of statistical tests available in R.
+We will finish this section by demonstrating a t-test as an example of statistical tests available in R.
 
 Has life expectancy increased from 2002 to 2007?
 
@@ -310,6 +323,14 @@ all(gap2002$country == gap2007$country)
 
 t.test(gap2007$lifeExp, gap2002$lifeExp, paired=TRUE)
 ```
+
+When performing a statistical test, it's good practice to visualize the data to make sure there is nothing funny going on.
+
+```{r}
+plot(gap2002$lifeExp, gap2007$lifeExp)
+abline(0,1)
+```
+
 
 The result of a t-test is actually a value we can manipulate further.
 
@@ -331,7 +352,7 @@ In R, a t-test is just another function returning just another type of data, so 
 
 * Missing data, which R represents as `NA`.
 
-* Factors are a type of vector for categorical data. Factors are similar to character vectors but with an associated set of "levels". See the `factor` function. It may be necessary to convert character vectors into factors, for example to adjust the order of levels when they are displayed in a plot.
+* Factors are a type of vector for categorical data. Factors are similar to character vectors but with an associated ordered set of "levels". See the `factor` function. It may be necessary to convert character vectors into factors, for example to adjust the order of levels when they are displayed in a plot.
 
 * Matrices are similar to data frames, but the columns all contain the same type of data. Conceptually, in a data frame each observation is a row, but in a matrix each observation is a cell in the matrix. See the `matrix` and `as.matrix` functions. These are used in bioinformatics, for example RNA-Seq results summarized as a matrix of read counts associated with genes (rows) and samples (columns).
 
