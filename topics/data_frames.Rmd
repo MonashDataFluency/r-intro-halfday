@@ -316,7 +316,7 @@ gap2007 <- filter(gap, year == 2007)
 t.test(gap2007$lifeExp, gap2002$lifeExp)
 ```
 
-This can actually be considered a paired sample t-test. We can specify `paired=TRUE` to `t.test` to perform a paired sample t-test (we can check this by looking at `?t.test`). We will first check that both data frames are in the correct order.
+This can actually be considered a paired sample t-test. We can specify `paired=TRUE` to `t.test` to perform a paired sample t-test (check this by looking at the help page with `?t.test`). It's important to first check that both data frames are in the same order.
 
 ```{r}
 all(gap2002$country == gap2007$country)
@@ -338,7 +338,7 @@ The result of a t-test is actually a value we can manipulate further.
 result <- t.test(gap2007$lifeExp, gap2002$lifeExp, paired=TRUE)
 
 class(result)
-mode(result)
+typeof(result)
 names(result)
 
 result$p.value
