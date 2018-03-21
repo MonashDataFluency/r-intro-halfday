@@ -289,21 +289,21 @@ This will all make more sense once you have seen these data types in action.
 
 ### Tip {.callout}
 
-If you're not sure what type of value you are dealing with you can use `class`. To see how R thinks of a value internally use `mode` (storage mode). We haven't yet seen cases where `class` and `mode` differ, but we will in the next section. For more detailed information use `str` (structure). Try the following:
+If you're not sure what type of value you are dealing with you can use `class`. Class is the "public face" of a value. To see how R thinks of a value internally use `typeof`. For example numeric vectors may be either "double" (real numbers, stored to around 15 digits precision) or "integer" (whole numbers, stored exactly). For more detailed information use `str` (structure). Try the following:
 
 ```{r eval=FALSE}
 class(myvec)
-mode(myvec)
+typeof(myvec)
 
 class(mylist)
-mode(mylist)
+typeof(mylist)
 str(mylist)
 ```
 
 
 ### vector
 
-Vectors contain zero or more elements, *all of the same basic type* ("mode").
+Vectors contain zero or more elements, *all of the same basic type*.
 
 Elements can be named (`names`), but often aren't.
 

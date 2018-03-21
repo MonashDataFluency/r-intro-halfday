@@ -54,7 +54,7 @@ nrow(gap)
 ncol(gap)
 colnames(gap)
 class(gap)
-mode(gap)
+typeof(gap)
 summary(gap)
 ```
 
@@ -116,7 +116,7 @@ gap[rows_wanted,]
 
 Ok, so how do we actually get data out of a data frame?
 
-Under the hood, a data frame is a list of column vectors. This is why `mode` told us that the underlying storage mode of `gap` was list. We can use `$` to retrieve columns, as in a list. (Occasionally it is also useful to use `[[ ]]` to retrieve columns, for example if the column name we want is stored in a variable.)
+Under the hood, a data frame is a list of column vectors. This is why `typeof` told us that `gap` was a list. We can use `$` to retrieve columns, as in a list. (Occasionally it is also useful to use `[[ ]]` to retrieve columns, for example if the column name we want is stored in a variable.)
 
 ```{r}
 head( gap$lifeExp )

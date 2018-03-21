@@ -187,7 +187,7 @@ $(document).ready(function () {
 <pre><code>## [1] &quot;country&quot;   &quot;continent&quot; &quot;year&quot;      &quot;lifeExp&quot;   &quot;pop&quot;       &quot;gdpPercap&quot;</code></pre>
 <pre class="r"><code>class(gap)</code></pre>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
-<pre class="r"><code>mode(gap)</code></pre>
+<pre class="r"><code>typeof(gap)</code></pre>
 <pre><code>## [1] &quot;list&quot;</code></pre>
 <pre class="r"><code>summary(gap)</code></pre>
 <pre><code>##    country           continent              year         lifeExp     
@@ -292,7 +292,7 @@ gap[rows_wanted,]</code></pre>
 ## 2 Afghanistan      Asia  1962  31.997 10267083  853.1007
 ## 3 Afghanistan      Asia  1972  36.088 13079460  739.9811</code></pre>
 <p>Ok, so how do we actually get data out of a data frame?</p>
-<p>Under the hood, a data frame is a list of column vectors. This is why <code>mode</code> told us that the underlying storage mode of <code>gap</code> was list. We can use <code>$</code> to retrieve columns, as in a list. (Occasionally it is also useful to use <code>[[ ]]</code> to retrieve columns, for example if the column name we want is stored in a variable.)</p>
+<p>Under the hood, a data frame is a list of column vectors. This is why <code>typeof</code> told us that <code>gap</code> was a list. We can use <code>$</code> to retrieve columns, as in a list. (Occasionally it is also useful to use <code>[[ ]]</code> to retrieve columns, for example if the column name we want is stored in a variable.)</p>
 <pre class="r"><code>head( gap$lifeExp )</code></pre>
 <pre><code>## [1] 28.801 30.332 31.997 34.020 36.088 38.438</code></pre>
 <pre class="r"><code>head( gap[[&quot;lifeExp&quot;]] )</code></pre>

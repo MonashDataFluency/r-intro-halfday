@@ -341,17 +341,17 @@ mylist$greeting</code></pre>
 <p>This will all make more sense once you have seen these data types in action.</p>
 <div id="tip-1" class="section level3 callout">
 <h3>Tip</h3>
-<p>If you’re not sure what type of value you are dealing with you can use <code>class</code>. To see how R thinks of a value internally use <code>mode</code> (storage mode). We haven’t yet seen cases where <code>class</code> and <code>mode</code> differ, but we will in the next section. For more detailed information use <code>str</code> (structure). Try the following:</p>
+<p>If you’re not sure what type of value you are dealing with you can use <code>class</code>. Class is the “public face” of a value. To see how R thinks of a value internally use <code>typeof</code>. For example numeric vectors may be either “double” (real numbers, stored to around 15 digits precision) or “integer” (whole numbers, stored exactly). For more detailed information use <code>str</code> (structure). Try the following:</p>
 <pre class="r"><code>class(myvec)
-mode(myvec)
+typeof(myvec)
 
 class(mylist)
-mode(mylist)
+typeof(mylist)
 str(mylist)</code></pre>
 </div>
 <div id="vector" class="section level3">
 <h3>vector</h3>
-<p>Vectors contain zero or more elements, <em>all of the same basic type</em> (“mode”).</p>
+<p>Vectors contain zero or more elements, <em>all of the same basic type</em>.</p>
 <p>Elements can be named (<code>names</code>), but often aren’t.</p>
 <p>Access single elements: <code>vec[5]</code></p>
 <p>Take a subset of a vector: <code>vec[c(1,3,5)]</code> <code>vec[c(TRUE,FALSE,TRUE,FALSE,TRUE)]</code></p>
