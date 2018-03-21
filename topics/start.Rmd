@@ -214,7 +214,7 @@ phrase[3:5]
 
 # Functions
 
-R has various *functions*, such as `sum( )`. We can get help on a `sum` with `?sum`.
+R has various *functions*, such as `sum( )`. We can get help on `sum` with `?sum`.
 
 ```
 ?sum
@@ -281,7 +281,7 @@ Functions that need to return multiple outputs often do so as a list.
 
 # Appendix: Overview of data types
 
-We've seen several data types in this chapter, and will be seeing two more in the following chapters. This section serves as an overview of data types in R and their typical usage.
+We've seen several data types in the above, and will be seeing another in the following section. This appendix serves as an overview of data types in R and their typical usage.
 
 Each data type has various ways it can be created and various ways it can be accessed. If we have data in the wrong type, there are functions to  "cast" it to the right type.
 
@@ -289,7 +289,7 @@ This will all make more sense once you have seen these data types in action.
 
 ### Tip {.callout}
 
-If you're not sure what type of value you are dealing with you can use `class`. To see how R thinks of a value internally use `mode` (storage mode). We haven't yet seen cases where `class` and `mode` differ, but we will in the next section. For more detailed information `str` (structure). Try the following:
+If you're not sure what type of value you are dealing with you can use `class`. To see how R thinks of a value internally use `mode` (storage mode). We haven't yet seen cases where `class` and `mode` differ, but we will in the next section. For more detailed information use `str` (structure). Try the following:
 
 ```{r eval=FALSE}
 class(myvec)

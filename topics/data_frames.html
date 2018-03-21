@@ -135,7 +135,7 @@ $(document).ready(function () {
 </ul>
 </div>
 
-<p>“Data frame” is R’s name for tabular data. We generally want each row in a data frame to represents a unit of observation, and each column to contain a different type of information about the units of observation. Tabular data in this form is called <a href="http://vita.had.co.nz/papers/tidy-data.html">“tidy data”</a>.</p>
+<p>“Data frame” is R’s name for tabular data. We generally want each row in a data frame to represent a unit of observation, and each column to contain a different type of information about the units of observation. Tabular data in this form is called <a href="http://vita.had.co.nz/papers/tidy-data.html">“tidy data”</a>.</p>
 <p>This section uses a collection of modern packages collectively known as the <a href="https://www.tidyverse.org/">Tidyverse</a>. R and its predecessor S have a history dating back to 1976. The Tidyverse fixes some dubious design decisions baked into “base R”, including having its own slightly improved form of data frame. Sticking to the Tidyverse where possible is generally safer, Tidyverse packages are more willing to generate errors rather than ignore problems.</p>
 <p>If the Tidyverse is not already installed, you will need to install it. However on the server we are using today it is already installed.</p>
 <pre class="r"><code># install.packages(&quot;tidyverse&quot;)</code></pre>
@@ -300,7 +300,7 @@ gap[rows_wanted,]</code></pre>
 <p>To get the lifeExp value of the third row as above, but unwrapped, we can use:</p>
 <pre class="r"><code>gap$lifeExp[3]</code></pre>
 <pre><code>## [1] 31.997</code></pre>
-<p>All of these indexing and access methods can also be used with <code>&lt;-</code> to modify values or add new columns. For example, suppose we wanted a gdp column. We can add this to the data frame with:</p>
+<p>All of these indexing and access methods can also be used with <code>&lt;-</code> to modify values or add new columns. For example, suppose we wanted a GDP column. We can add this to the data frame with:</p>
 <pre class="r"><code>gap$gdp &lt;- gap$gdpPercap * gap$pop</code></pre>
 <div id="logical-indexing" class="section level2">
 <h2>Logical indexing</h2>

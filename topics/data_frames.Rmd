@@ -2,7 +2,7 @@
 title: Data frames and dplyr
 ---
 
-"Data frame" is R's name for tabular data. We generally want each row in a data frame to represents a unit of observation, and each column to contain a different type of information about the units of observation. Tabular data in this form is called ["tidy data"](http://vita.had.co.nz/papers/tidy-data.html).
+"Data frame" is R's name for tabular data. We generally want each row in a data frame to represent a unit of observation, and each column to contain a different type of information about the units of observation. Tabular data in this form is called ["tidy data"](http://vita.had.co.nz/papers/tidy-data.html).
 
 This section uses a collection of modern packages collectively known as the [Tidyverse](https://www.tidyverse.org/). R and its predecessor S have a history dating back to 1976. The Tidyverse fixes some dubious design decisions baked into "base R", including having its own slightly improved form of data frame. Sticking to the Tidyverse where possible is generally safer, Tidyverse packages are more willing to generate errors rather than ignore problems.
 
@@ -130,7 +130,7 @@ gap$lifeExp[3]
 ```
 
 
-All of these indexing and access methods can also be used with `<-` to modify values or add new columns. For example, suppose we wanted a gdp column. We can add this to the data frame with:
+All of these indexing and access methods can also be used with `<-` to modify values or add new columns. For example, suppose we wanted a GDP column. We can add this to the data frame with:
 
 ```{r}
 gap$gdp <- gap$gdpPercap * gap$pop
