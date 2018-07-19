@@ -23,6 +23,10 @@ We will be using RStudio, a friendly front end to R. On the day, we will be usin
 
 * [gapminder.csv](gapminder.csv)
 
+## Introductory slides
+
+* [Introductory slides](2018-07-20_IntroToIntroToR.pdf)
+
 ## Topics
 
 * [Starting out in R](topics/start.html)
