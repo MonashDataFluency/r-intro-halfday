@@ -38,7 +38,7 @@ We will be using RStudio, a friendly front end to R. On the day, we will be usin
 
 Workshops run by the Monash Bioinformatics Platform:
 
-* [A full-day introduction to R](https://monashbioinformaticsplatform.github.io/r-intro/), also covering topics such as matrices, missing data, factors, and merging data frames.
+* [A full-day introduction to R](https://monashdatafluency.github.io/r-intro-2/), also covering topics such as missing data, factors, and merging data frames.
 * [A further workshop on R](https://monashbioinformaticsplatform.github.io/r-more/), covering programming, the modern Tidyverse approach, Bioconductor for biological data, Rmarkdown for writing up results, and Shiny for web-apps.
 
 Other resources:
